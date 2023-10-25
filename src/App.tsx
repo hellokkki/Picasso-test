@@ -1,12 +1,11 @@
-import Homepage from './pages/homepage'
+
 import './App.css'
+import Layout from './app/router/Layout'
 
 function App() {
 
   return (
-    <>
-     <Homepage />
-    </>
+     <Layout />
   )
 }
 
