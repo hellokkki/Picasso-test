@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { TPost } from "../typing/types/TPost";
 
-const API_URL = "/api";
+const API_URL = "https://jsonplaceholder.typicode.com";
 
 export const postApi = createApi({
   reducerPath: "postApi",

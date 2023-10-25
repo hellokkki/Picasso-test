@@ -5,7 +5,7 @@ import Homepage from '../../pages/homepage'
 
 function Layout(): React.ReactElement {
   return (
-    <body style={{height: '100dvh', display: 'flex', flexDirection: 'column'}}>
+    <div style={{height: '100dvh', display: 'flex', flexDirection: 'column'}}>
     <header>
         <Typography>
             LOREM IPSUM DOLOR SIT AMET
@@ -21,7 +21,7 @@ function Layout(): React.ReactElement {
       <Homepage />
       <Outlet />
     </main>
-    </body>
+    </div>
   )
 }
 

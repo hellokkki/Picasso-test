@@ -11,16 +11,5 @@ export default defineConfig({
     iconDirs: [path.resolve(process.cwd(), 'src/assets')],
     symbolId: 'icon-[assets]-[name]'
   })
-  ],
-  server: {
-    host: true,
-    port: 3000,
-    proxy: {
-     '/api' : {
-      target: 'http://jsonplaceholder.typicode.com',
-      changeOrigin: true,
-      rewrite: (path) => path.replace(/^\/api/, ''),
-     }
-    }
-    }
+  ]
   })
