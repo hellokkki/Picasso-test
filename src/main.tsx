@@ -4,8 +4,9 @@ import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material'
 import { router } from './app/router/index.tsx'
-import { store } from './app/store/index.tsx'
+import { store } from './app/store/index.ts'
 import { PikassoTheme } from './app/theme/index.ts'
+import 'virtual:svg-icons-register'
 import './index.css'
 
 

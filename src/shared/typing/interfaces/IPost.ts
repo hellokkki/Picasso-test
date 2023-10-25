@@ -1,6 +1,5 @@
-import { TPost, TPostSerialized } from "../types/TPost";
+import { TPost } from "../types/TPost";
 
 export interface IPost {
-  post: TPost,
-  // toSerializedPostList: () => TPostSerialized[]
+  post: TPost
 }
