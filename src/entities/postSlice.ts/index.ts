@@ -1,6 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { IPostState } from "../../shared/typing/interfaces/IPostState";
-import { TPostSerialized } from "../../shared/typing/types/TPost";
 
 const inititalPostState: IPostState = {
   post: {},
@@ -14,7 +13,7 @@ const postSlice = createSlice({
       state.post = action.payload.post;
     },
     clearPost(state) {
-      state.post = {};
+      state.post = {}
     },
   },
 });

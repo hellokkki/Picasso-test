@@ -4,10 +4,6 @@ import { postApi } from '../../shared/postsApi'
 
 function PostsFeed(): React.ReactElement {
   const { data, error, isLoading } = postApi.useGetPostsQuery({ limit: 20, start: 1 })
-  console.log(postApi)
-
-  console.log(data)
-
   if (error)
   return(
     <div>

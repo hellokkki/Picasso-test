@@ -23,7 +23,6 @@ export const postApi = createApi({
         return endpointName;
       },
       merge(currentCacheData, responseData) {
-        console.log(currentCacheData);
         return [...currentCacheData, ...responseData];
       },
       forceRefetch({ currentArg, previousArg }) {

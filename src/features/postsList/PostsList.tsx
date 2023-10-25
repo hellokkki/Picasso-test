@@ -5,6 +5,7 @@ import React, {
 import PostCard from "../../shared/UI/PostCard";
 import { postApi } from "../../shared/postsApi";
 import generateUniqueId from "generate-unique-id";
+import { Typography } from "@mui/material";
 
 const PostsList: React.FC<{ limit: number }> = ({
   limit,
@@ -17,10 +18,9 @@ const PostsList: React.FC<{ limit: number }> = ({
   useEffect(() => {
     if (isMyFetching) {
       setCurrentPost((prev) => {
-        return prev < 93 ? prev + 1 : prev;
+        return prev < limit ? prev + 1 : prev;
       });
       setIsFetchingDown(false);
-      // fetchNextPagePosts()
     }
   }, [isMyFetching]);
 
@@ -32,15 +32,6 @@ const PostsList: React.FC<{ limit: number }> = ({
       setIsMyFetchingUp(false);
     }
   }, [isMyFetchingUp]);
-
-  const fetchNextPagePosts = () => {
-    const { data } = postApi.endpoints.getPosts.useQuery({
-      limit: limit,
-      start: currentPost,
-    });
-  return data
-};
-
 
   const scrollHandler = (e: any): void => {
     if (e.target.documentElement.scrollTop < 50) {
@@ -83,7 +74,7 @@ const PostsList: React.FC<{ limit: number }> = ({
           );
         })
       ) : (
-        <></>
+        <Typography variant="h1">Loading...</Typography>
       )}
     </ul>
   );

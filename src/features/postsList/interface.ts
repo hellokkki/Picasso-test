@@ -1,4 +1,4 @@
-import { TPost, TPostSerialized } from "../../shared/typing/types/TPost";
+import { TPost } from "../../shared/typing/types/TPost";
 
 export interface IPostListProps {
    limit: number,
