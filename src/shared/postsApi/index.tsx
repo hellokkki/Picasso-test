@@ -8,7 +8,7 @@ export const postApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: API_URL,
     method: "Get",
-    mode: "no-cors",
+    mode: "cors",
     headers: {
       "content-type": "Application-Json",
     },
