@@ -1,55 +1,92 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import PostCard from '../../shared/UI/PostCard';
-import { IPostsListProps } from './interface';
+import React, {
+  useEffect,
+  useState,
+} from "react";
+import PostCard from "../../shared/UI/PostCard";
+import { postApi } from "../../shared/postsApi";
+import generateUniqueId from "generate-unique-id";
 
-const PostsList: React.FC<IPostsListProps> = ({ posts }) => {
-  // const [scrollY, setScrollY] = useState(0);
-  // const scrollElementRef = useRef<HTMLDivElement>(null);
-  // useLayoutEffect(() => {
-  //   const scrollElement = scrollElementRef.current;
-  //   if (!scrollElement) return;
-  //   const handleScroll = () => {
-  //       const scrollTop = scrollElement.scrollTop;
-  //       console.log(scrollTop)
-  //       setScrollY(scrollTop);
-  //   }
-  //   handleScroll();
-  //   console.log(scrollElement
-  //   scrollElement.addEventListener('scroll', handleScroll);
-  //   return () => scrollElement.removeEventListener('scroll', handleScroll);
-  // }, [])
-  // useEffect(() => {
-  //    console.log(scrollY)
-  // }, [scrollY])
+const PostsList: React.FC<{ limit: number }> = ({
+  limit,
+}): React.ReactElement => {
+  const [currentPost, setCurrentPost] = useState(0);
+  const { data, isLoading } = postApi.useGetPostsQuery({ limit: 20, start: currentPost });
+  const [isMyFetching, setIsFetchingDown] = useState(false);
+  const [isMyFetchingUp, setIsMyFetchingUp] = useState(false);
+
+  useEffect(() => {
+    if (isMyFetching) {
+      setCurrentPost((prev) => {
+        return prev < 93 ? prev + 1 : prev;
+      });
+      setIsFetchingDown(false);
+      // fetchNextPagePosts()
+    }
+  }, [isMyFetching]);
+
+  useEffect(() => {
+    if (isMyFetchingUp) {
+      setCurrentPost((prev) => {
+        return prev > 0 ? prev - 1 : prev;
+      });
+      setIsMyFetchingUp(false);
+    }
+  }, [isMyFetchingUp]);
+
+  const fetchNextPagePosts = () => {
+    const { data } = postApi.endpoints.getPosts.useQuery({
+      limit: limit,
+      start: currentPost,
+    });
+  return data
+};
 
 
- const handleScroll = (e: React.UIEvent<HTMLElement>): void => {
-  e.stopPropagation()
-  console.log({
-    event: e,
-    target: e.target,
-    scrollTop: e.currentTarget.scrollTop
-  })
- }
+  const scrollHandler = (e: any): void => {
+    if (e.target.documentElement.scrollTop < 50) {
+      setIsMyFetchingUp(true);
+    }
+    if (
+      e.target.documentElement.scrollHeight -
+        e.target.documentElement.scrollTop -
+        window.innerHeight <
+      50
+    ) {
+      setIsFetchingDown(true);
+      window.scrollTo(
+        0,
+        e.target.documentElement.scrollHeight +
+          e.target.documentElement.scrollTop
+      );
+    }
+  };
 
- console.log(scrollY)
+  useEffect(() => {
+    document.addEventListener("scroll", scrollHandler);
+    return () => {
+      document.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
 
- if(posts)
   return (
-    <ol>
-     {posts.map((post) => {
-      return(
-        <li>
-          <PostCard 
-           number={post.number}
-           title={post.title}
-           description={post.description}
-          />
-        </li>
-      )
-     })}
-    </ol>
-  )
-}
+    <ul id="scrollable">
+      {!isLoading && data ? (
+        data.map((post) => {
+          return (
+            <li key={generateUniqueId()}>
+              <PostCard
+                number={post.id.toString()}
+                title={post.title}
+                description={post.body}
+              />
+            </li>
+          );
+        })
+      ) : (
+        <></>
+      )}
+    </ul>
+  );
+};
 
-export default PostsList
+export default PostsList;

@@ -5,7 +5,7 @@
     "node": true
   },
   "parser": "@typescript-eslint/parser",
-  "extends": ["airbnb", "next/core-web-vitals"],
+  "extends": ["airbnb"],
   "plugins": ["react", "jsx-a11y", "import"],
   "rules": {
     "import/extensions": [ 
