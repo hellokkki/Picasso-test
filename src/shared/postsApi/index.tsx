@@ -29,9 +29,9 @@ export const postApi = createApi({
         return currentArg !== previousArg;
       },
     }),
-    getPostByTitle: builder.query<TPost, { title: string }>({
+    getPostByTitle: builder.query<TPost[], { title: string }>({
       query: ({ title }) => ({
-        url: `/posts?&_title=${title}`,
+        url: `/posts?title=${title}`,
       }),
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;

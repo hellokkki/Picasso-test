@@ -5,17 +5,21 @@ import { TPostSerialized } from "../../shared/typing/types/TPost.ts";
 import { Typography, Box, Button } from "@mui/material";
 import LeftArrowButton from "../../shared/UI/LeftArrowButton/index.tsx";
 import { RootReducerState } from "../../app/store/rootReducer.ts";
+import { postApi } from "../../shared/postsApi/index.tsx";
 
 const Postpage: React.FC = () => {
   const post = useSelector(
-    (state: RootReducerState) => state.postSLiceReducer.post as TPostSerialized
+    (state: RootReducerState) => state.postSLiceReducer.post as TPostSerialized 
   );
+
+  const { data } = postApi.useGetPostByTitleQuery({ title: post.title }) ?? undefined
+
   const navigate = useNavigate();
   const handleNavigate = () => {
     navigate("/");
   };
 
-  if (post)
+  if (data && post) {
     return (
       <main
         style={{
@@ -35,11 +39,11 @@ const Postpage: React.FC = () => {
           />
         </Box>
         <Box marginBottom='50px'>
-        <Typography variant="h4">{post.title}</Typography>
+        <Typography variant="h4">{data[0].title}</Typography>
         </Box>
 
         <Box>
-          <Typography>{post.description}</Typography>
+          <Typography>{data[0].body}</Typography>
         </Box>
 
         <Box marginTop='20px'>
@@ -51,6 +55,9 @@ const Postpage: React.FC = () => {
         </Box>
       </main>
     );
+  } else {
+    return <div>Post error</div>
+  }
 };
 
 export default Postpage;
