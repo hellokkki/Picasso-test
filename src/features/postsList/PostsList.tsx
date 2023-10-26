@@ -68,7 +68,7 @@ const PostsList: React.FC<{ limit: number }> = ({
               <PostCard
                 number={post.id.toString()}
                 title={post.title}
-                description={post.body}
+                description={`${post.body.slice(0, 40)}...`}
               />
             </li>
           );
